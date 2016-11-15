@@ -13,11 +13,11 @@
       http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
  
  
- <jpa:repositories base-package="com.packt.webstore.repository" />
+ <jpa:repositories base-package="com.abyssinia.mumScrum.repository" />
  
    <bean id="entityManager" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
       <property name="dataSource" ref="dataSource" />
-      <property name="packagesToScan" value="com.packt.webstore.domain" />
+      <property name="packagesToScan" value="com.abyssinia.mumScrum.domain" />
       <property name="jpaVendorAdapter">
          <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
       </property>
@@ -52,9 +52,9 @@
    </bean>
    
    <!-- Scan for  transaction-based resources -->
-   	<context:component-scan base-package="com.packt.webstore.service" />
-    	<context:component-scan base-package="com.packt.webstore.domain" />
-    	<context:component-scan base-package="com.packt.webstore.repository" />
+   	<context:component-scan base-package="com.abyssinia.mumScrum.service" />
+    	<context:component-scan base-package="com.abyssinia.mumScrum.domain" />
+    	<context:component-scan base-package="com.abyssinia.mumScrum.repository" />
      
    <tx:annotation-driven transaction-manager="transactionManager"/>
  
