@@ -18,6 +18,9 @@ import com.abyssinia.mumScrum.domain.Employee;
 		@Query("select e from Employee  e where e.firstName= :firstName")
 		public Employee locateOneEmployeebyHisFirstName(@Param("firstName") String firstName);
 		
+		@Query("select e from Employee e where e.username = :username")
+		Employee findByUserName(@Param("username") String username);
+		
 	
 	}
 	

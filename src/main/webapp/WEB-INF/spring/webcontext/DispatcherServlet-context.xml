@@ -11,6 +11,13 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="com.abyssinia.mumScrum.controller" />
+	
+<!-- 	<context:component-scan base-package="com.mum.eventmanagement"
+		use-default-filters="false">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan> -->
+	
  	
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />

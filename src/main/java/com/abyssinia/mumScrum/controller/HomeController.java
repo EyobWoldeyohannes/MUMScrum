@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
 
-
+//added some new stuffs
+	
 	@RequestMapping("/")
 	public String welcome(Model model) {
 		
-		model.addAttribute("greeting", "Welcome to our community, Esehak!!");
+		model.addAttribute("greeting", "MumScrum");
 		model.addAttribute("tagline", "The one and only pace to live, work and play!!");
 		
 		return "welcome";
@@ -21,5 +22,5 @@ public class HomeController {
 	public String greeting(){
 		return "welcome";
 	}
- 
+	
 }

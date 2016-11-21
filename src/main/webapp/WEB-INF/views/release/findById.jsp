@@ -6,9 +6,13 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Hello Guys find by ID!  
 </h1>
+<a href="<c:url value="/releases/release" />"
+ class="btn btn-danger btn-mini pull-right">Find Release BY Id</a>
 
+<input type="text" name="id" />
+<input type="submit" />
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>

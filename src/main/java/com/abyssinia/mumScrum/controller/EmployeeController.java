@@ -20,7 +20,6 @@ import com.abyssinia.mumScrum.domain.Employee;
 import com.abyssinia.mumScrum.service.EmployeeService;
 
 
-
 @Controller
 @RequestMapping({ "/employees" })
 public class EmployeeController {
@@ -32,7 +31,7 @@ public class EmployeeController {
 	public String listEmployees(Model model) {
 		model.addAttribute("employees", employeeService.findAll());
 
-		return "employees";
+		return "/employee/employees";
 	}
 
 	@RequestMapping("/employee/{id}")
@@ -40,7 +39,7 @@ public class EmployeeController {
 		Employee employee = employeeService.getEmployeeByNumber(id);
 		System.out.println(":::::::::dsfgsrgdsfg:::::::::::::::::::" + id);
 		model.addAttribute("employee", employee);
-		return "employee";
+		return "/employee/employee";
 	}
 	
 	@RequestMapping(value = "/listByID", method = RequestMethod.GET)
@@ -48,20 +47,20 @@ public class EmployeeController {
 		Employee employee = employeeService.findByName(resourceName);
 		System.out.println(employee);
 		model.addAttribute("employee", employee);
-		return "employee";
+		return "/employee/employee";
 	}
 	
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addNewEmployee(@ModelAttribute("newEmployee") Employee newEmployee) {
-		return "addEmployee";
+		return "/employee/addEmployee";
 	}
 	@RequestMapping(value = "/edit/{id}", method= RequestMethod.GET)
 	public String edit(@PathVariable("id") Long id, Model model){
 		Employee employee=employeeService.getEmployeeByNumber(id); 
 		model.addAttribute("employee", employee);
-		System.out.println("Mine is Mine");
-		return "edit";
+		//System.out.println("Mine is Mine");
+		return "/employee/edit";
 	}
 	
 	@RequestMapping(value = "/delete/{id}", method= RequestMethod.GET)
@@ -78,9 +77,6 @@ public class EmployeeController {
 	employeeService.update(employeeToBeAdded);
 
 		return "redirect:/employees/list";
-		
-		
-		
 	}
 	
 	
@@ -121,6 +117,59 @@ public class EmployeeController {
 		}
 
 		return "redirect:/employees/list";
+	}
+	
+	@RequestMapping(value = "/login", method= RequestMethod.GET)
+	public String loginPage(@Valid @ModelAttribute("employee") Employee employeeLogin){
+		
+		return "/employee/login";
+	}
+	
+	@RequestMapping(value= "/login2", method= RequestMethod.POST)
+	public String processLogin(@Valid @ModelAttribute("employee") Employee employeeLogin, BindingResult result, HttpServletRequest request){
+		if (result.hasErrors()) {
+			return "/employee/login";
+		} else {
+			boolean found = employeeService.findByLogin(employeeLogin.getUsername(), employeeLogin.getPassword());
+			String role = employeeService.getRole(employeeLogin.getUsername());
+			
+			if (found) {	
+				if(role.equalsIgnoreCase("ADMIN")){
+					return "/employee/adminHome";
+				}
+				else if(role.equalsIgnoreCase("OWNER")){
+					return "/employee/ownerHome";
+				}
+				else{
+				return "/employee/success";
+				}
+			} else {				
+				return "/employee/failure";
+			}
+		}
+	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST)
+	public String login(@Valid @ModelAttribute("employeeLogin") Employee employeeLogin, BindingResult result, HttpServletRequest request) {
+		if (result.hasErrors()) {
+			return "/employee/login";
+		} else {
+			boolean found = employeeService.findByLogin(employeeLogin.getUsername(), employeeLogin.getPassword());
+			if (found) {	
+				if(employeeLogin.getRole().equalsIgnoreCase("ADMIN")){
+					return "/employee/adminHome";
+				}
+				else if(employeeLogin.getRole().equalsIgnoreCase("OWNDER")){
+					return "/employee/ownerHome";
+				}
+				else{
+				return "/employee/success";
+				}
+			} else {				
+				return "/employee/failure";
+			}
+		}
+		
 	}
 
 }
